@@ -1,19 +1,11 @@
 package inf101.v17.boulderdash.maps;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
+
 import inf101.v17.boulderdash.Direction;
 import inf101.v17.boulderdash.IllegalMoveException;
 import inf101.v17.boulderdash.Position;
-import inf101.v17.boulderdash.bdobjects.BDBug;
-import inf101.v17.boulderdash.bdobjects.BDDiamond;
-import inf101.v17.boulderdash.bdobjects.BDEmpty;
-import inf101.v17.boulderdash.bdobjects.BDPlayer;
-import inf101.v17.boulderdash.bdobjects.BDSand;
-import inf101.v17.boulderdash.bdobjects.BDWall;
-import inf101.v17.boulderdash.bdobjects.IBDObject;
+import inf101.v17.boulderdash.bdobjects.*;
 import inf101.v17.datastructures.IGrid;
 import inf101.v17.datastructures.MyGrid;
 
@@ -34,6 +26,10 @@ public class BDMap {
 	 * frequently.
 	 */
 	protected BDPlayer player;
+
+	/**HASHVERSION*/
+	HashMap<IBDObject, Position> hashPosition = new HashMap<>();
+
 
 	/**
 	 * Main constructor of this class.
@@ -127,6 +123,8 @@ public class BDMap {
 			for (int y = 0; y < height; y++) {
 				IBDObject obj = makeObject(inputmap.get(x, y), x, y);
 				grid.set(x, y, obj);
+				// TODO: HASHVERSION note: obj.getpos gir error
+				hashPosition.put(obj, new Position(x,y));
 			}
 		}
 	}
@@ -155,6 +153,8 @@ public class BDMap {
 			return new BDSand(this);
 		} else if (c == ' ') {
 			return new BDEmpty(this);
+		} else if (c == 'd') {
+			return new BDDiamond(this);
 		}
 
 		System.err.println("Illegal character in map definition at (" + x + ", " + y + "): '" + c + "'");
@@ -244,9 +244,8 @@ public class BDMap {
 	 * @return
 	 */
 	public Position getPosition(IBDObject object) {
-		// TODO
-		
-		return null;
+		// TODO: HASHVERSION
+		return hashPosition.get(object);
 	}
 
 	/**
@@ -281,10 +280,27 @@ public class BDMap {
 			throw new IndexOutOfBoundsException();
 		}
 		grid.set(x, y, element);
+		// TODO: HASHVERSION obj.getpos gir error
+		hashPosition.put(element, new Position(x,y));
 	}
 
+	/**
+	 * EMPTY
+	 */
 	public void step() {
-		// TODO
-		
+		for (int i = 0; i < grid.getWidth(); i++) {
+			for (int j = 0; j < grid.getHeight(); j++) {
+				grid.get(i,j).step();
+			}
+		}
+
+		//Alternative
+		/*try {
+			for (IBDObject x : hashPosition.keySet()) {
+				x.step();
+			}
+		} catch (ConcurrentModificationException e) {
+			//DO NOTHING
+		}*/
 	}
 }
