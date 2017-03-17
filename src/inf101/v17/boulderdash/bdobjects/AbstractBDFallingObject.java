@@ -36,8 +36,8 @@ public abstract class AbstractBDFallingObject extends AbstractBDKillingObject {
 
 	/**
 	 * This method implements the logic of the object falling. It checks whether
-	 * it can fall, depending on the object in the tile underneath it and if so,
-	 * tries to prepare the move.
+	 * it can fall, depending on the object in the tile underneath it, to the sides and diagonally below,
+	 * and if so, tries to prepare the move.
 	 */
 	public void fall() {
 		// Wait until its time to fall
@@ -52,21 +52,49 @@ public abstract class AbstractBDFallingObject extends AbstractBDKillingObject {
 		// The object cannot fall if it is on the lowest row.
 		if (pos.getY() > 0) {
 			try {
-				// Get the object in the tile below.
-				Position below = pos.moveDirection(Direction.SOUTH);
-				IBDObject under = owner.get(below);
+				// Get the object in the tile below and to the left and right.
+				Position below = pos.moveDirection(Direction.SOUTH), west = pos.moveDirection(Direction.WEST),
+                         east = pos.moveDirection(Direction.EAST), belowWest = west.moveDirection(Direction.SOUTH),
+						 belowEast = east.moveDirection(Direction.SOUTH);
+				IBDObject under = owner.get(below), left = null, right = null, underLeft = null, underRight = null;
+
+				// Call get on object only if coordinates exists in the grid
+				if (pos.getX()+1 < owner.getWidth()) {
+					right = owner.get(east);
+					underRight = owner.get(belowEast);
+				}
+                if (pos.getX()-1 > 0) {
+					left = owner.get(west);
+					underLeft = owner.get(belowWest);
+				}
 
 				if (falling) {
-					// fall one step if tile below is empty or killable
+					// Fall one step if tile below is empty or killable
 					if (under instanceof BDEmpty || under instanceof IBDKillable) {
 						prepareMoveTo(Direction.SOUTH);
-					} else {
+					}
+					// If one wants tumbling rocks/diamonds only when set in motion (does not account for falling on sand and such)
+					/*else if (left instanceof BDEmpty && (underLeft instanceof BDEmpty || underLeft instanceof IBDKillable)) {
+                        prepareMoveTo(Direction.WEST);
+                    } else if (right instanceof BDEmpty && (underRight instanceof BDEmpty || underRight instanceof IBDKillable)) {
+                        prepareMoveTo(Direction.EAST);
+					}*/ else {
 						falling = false;
 					}
 				} else {
 					// start falling if tile below is empty
 					falling = under instanceof BDEmpty;
 					fallingTimeWaited = 1;
+				}
+				/*Rocks and diamonds will tumble first to the the left if possible if not then to the right.
+				* The player will not be killed if standing directly to the left or right of a falling object that
+				* would otherwise have fallen over*/
+				if (!falling && !(under instanceof BDSand) && !(under instanceof IBDKillable)){
+					if (left instanceof BDEmpty && (underLeft instanceof BDEmpty || underLeft instanceof IBDKillable)) {
+						prepareMoveTo(Direction.WEST);
+					} else if (right instanceof BDEmpty && (underRight instanceof BDEmpty || underRight instanceof IBDKillable)) {
+						prepareMoveTo(Direction.EAST);
+					}
 				}
 			} catch (IllegalMoveException e) {
 				// This should never happen.
