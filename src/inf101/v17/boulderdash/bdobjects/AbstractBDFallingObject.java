@@ -92,8 +92,10 @@ public abstract class AbstractBDFallingObject extends AbstractBDKillingObject {
 				if (!falling && !(under instanceof BDSand) && !(under instanceof IBDKillable)){
 					if (left instanceof BDEmpty && (underLeft instanceof BDEmpty || underLeft instanceof IBDKillable)) {
 						prepareMoveTo(Direction.WEST);
+						falling = true;
 					} else if (right instanceof BDEmpty && (underRight instanceof BDEmpty || underRight instanceof IBDKillable)) {
 						prepareMoveTo(Direction.EAST);
+						falling = true;
 					}
 				}
 			} catch (IllegalMoveException e) {

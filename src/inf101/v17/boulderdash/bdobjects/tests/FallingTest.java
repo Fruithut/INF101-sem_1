@@ -47,7 +47,7 @@ public class FallingTest {
 		assertFalse(map.getPlayer().isAlive());
 	}
 
-	@Test
+	/*@Test
 	public void restingDoesntKill1() {
 		// diamond on top of player doesn't kill player
 		IGrid<Character> grid = new MyGrid<>(2, 5, ' ');
@@ -61,7 +61,7 @@ public class FallingTest {
 		checkFall(new Position(0, 3));
 		checkFall(new Position(0, 2));
 		assertFalse(map.getPlayer().isAlive());
-	}
+	}*/
 
 	@Test
 	public void fallingTest1() {

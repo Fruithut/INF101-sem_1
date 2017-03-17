@@ -21,7 +21,7 @@ public interface IBDObject {
 
 	/**
 	 * This method is used to get a simple paintable output of this object. Can
-	 * be replaced with something fancier.
+	 * be replaced with something fancier. (Currently returns image from png.-files)
 	 * 
 	 * @return
 	 */

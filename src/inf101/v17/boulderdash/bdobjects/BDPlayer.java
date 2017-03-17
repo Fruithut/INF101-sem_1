@@ -1,5 +1,6 @@
 package inf101.v17.boulderdash.bdobjects;
 
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
@@ -7,6 +8,10 @@ import inf101.v17.boulderdash.Direction;
 import inf101.v17.boulderdash.IllegalMoveException;
 import inf101.v17.boulderdash.Position;
 import inf101.v17.boulderdash.maps.BDMap;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
+
+import java.io.InputStream;
 
 /**
  * An implementation of the player.
@@ -15,6 +20,7 @@ import inf101.v17.boulderdash.maps.BDMap;
  *
  */
 public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
+	private ImagePattern up, down, left, right, still;
 
 	/**
 	 * Is the player still alive?
@@ -27,17 +33,48 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	protected Direction askedToGo;
 
 	/**
+	 * The last move the user wanted to make
+	 */
+	protected Direction askedToGoLast;
+
+	/**
 	 * Number of diamonds collected so far.
 	 */
 	protected int diamondCnt = 0;
 
 	public BDPlayer(BDMap owner) {
 		super(owner);
+
+		InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/player/up.png");
+		up = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
+		InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/player/down.png");
+		down = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
+		InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/player/left.png");
+		left = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
+		InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/player/right.png");
+		right = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
+		InputStream resourceAsStream5 = getClass().getResourceAsStream("../images/player/still.png");
+		still = new ImagePattern(new Image(resourceAsStream5), 0, 0, 1,1, true);
 	}
 
+	/**
+	 * @return Gets proper image of player based on where it's headed
+	 */
 	@Override
-	public Color getColor() {
-		return Color.BLUE;
+	public Paint getColor() {
+		if (askedToGoLast != null) {
+			switch (askedToGoLast) {
+				case NORTH:
+					return up;
+				case SOUTH:
+					return down;
+				case EAST:
+					return right;
+				case WEST:
+					return left;
+			}
+		}
+		return still;
 	}
 
 	/**
@@ -48,7 +85,7 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	}
 
 	/**
-	 * Determines direction of player-object based on input
+	 * Determines direction of player-object based on keyboard-input
 	 * @param key
 	 */
 	public void keyPressed(KeyCode key) {
@@ -61,6 +98,7 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 			break;
 			case DOWN: askedToGo = Direction.SOUTH;
 			break;
+			default: askedToGo = null;
 		}
 	}
 
@@ -79,7 +117,7 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	}
 
 	/**
-	 * DOCUMENT
+	 * COMMENT ON THIS
 	 */
 	@Override
 	public void step() {
@@ -102,21 +140,18 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 			} else {
 				legalMove = true;
 			}
-
 		}
 
 		if (legalMove) {
 			try {
 				prepareMove(playerNext);
-				askedToGo = null;
 				super.step();
+				askedToGoLast = askedToGo;
+				askedToGo = null;
 			} catch (IllegalMoveException e) {
-				//DO NOTHING
+				e.printStackTrace();
 			}
 		}
-
-		askedToGo = null;
-		super.step();
 	}
 
 	@Override

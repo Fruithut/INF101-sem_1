@@ -4,11 +4,15 @@ import inf101.v17.boulderdash.Direction;
 import inf101.v17.boulderdash.IllegalMoveException;
 import inf101.v17.boulderdash.Position;
 import inf101.v17.boulderdash.maps.BDMap;
-import javafx.scene.paint.Color;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+
+import java.io.InputStream;
 
 
 public class BDRock extends AbstractBDFallingObject {
+    private ImagePattern image;
 
     /**
      * Standard constructor for BDRock
@@ -16,6 +20,8 @@ public class BDRock extends AbstractBDFallingObject {
      */
     public BDRock(BDMap owner) {
         super(owner);
+        InputStream resourceAsStream = getClass().getResourceAsStream("../images/rock.png");
+        image = new ImagePattern(new Image(resourceAsStream), 0, 0, 1,1, true);
     }
 
 
@@ -53,11 +59,8 @@ public class BDRock extends AbstractBDFallingObject {
         }
     }
 
-    /**
-     * @return Color of rock
-     */
     @Override
     public Paint getColor() {
-        return Color.DARKGRAY;
+        return image;
     }
 }

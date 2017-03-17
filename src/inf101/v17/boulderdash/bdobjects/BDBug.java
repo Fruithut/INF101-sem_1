@@ -1,6 +1,7 @@
 package inf101.v17.boulderdash.bdobjects;
 
 import javafx.scene.paint.Color;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -9,6 +10,7 @@ import inf101.v17.boulderdash.Direction;
 import inf101.v17.boulderdash.IllegalMoveException;
 import inf101.v17.boulderdash.Position;
 import inf101.v17.boulderdash.maps.BDMap;
+import javafx.scene.paint.Paint;
 
 /**
  * An implementation of a bug.
@@ -90,7 +92,7 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 	}
 
 	@Override
-	public Color getColor() {
+	public Paint getColor() {
 		return Color.GREEN;
 	}
 
