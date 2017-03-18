@@ -12,6 +12,9 @@ import java.io.InputStream;
 
 
 public class BDRock extends AbstractBDFallingObject {
+    /**
+     * Will hold image of object
+     */
     private ImagePattern image;
 
     /**

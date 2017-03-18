@@ -246,7 +246,6 @@ public class BDMap {
 	 * @return
 	 */
 	public Position getPosition(IBDObject object) {
-		// TODO: HASHVERSION
 		return hashPosition.get(object);
 	}
 
@@ -282,7 +281,7 @@ public class BDMap {
 			throw new IndexOutOfBoundsException();
 		}
 		grid.set(x, y, element);
-		// TODO: HASHVERSION obj.getpos gir error
+		// TODO: HASHVERSION obj.getpos() gives error
 		hashPosition.put(element, new Position(x,y));
 	}
 

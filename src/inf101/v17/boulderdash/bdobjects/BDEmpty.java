@@ -13,6 +13,9 @@ import java.io.InputStream;
  *
  */
 public class BDEmpty extends AbstractBDObject {
+	/**
+	 * Will hold image of object
+	 */
 	private ImagePattern image;
 
 	public BDEmpty(BDMap owner) {

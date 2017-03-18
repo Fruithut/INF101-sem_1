@@ -14,6 +14,9 @@ import java.io.InputStream;
  *
  */
 public class BDDiamond extends AbstractBDFallingObject {
+    /**
+     * Will hold image of object
+     */
 	private ImagePattern image;
 
 	public BDDiamond(BDMap owner) {

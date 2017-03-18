@@ -15,6 +15,9 @@ import java.io.InputStream;
  *
  */
 public class BDSand extends AbstractBDObject {
+	/**
+	 * Will hold image of object
+	 */
 	private ImagePattern image;
 
 	public BDSand(BDMap owner) {

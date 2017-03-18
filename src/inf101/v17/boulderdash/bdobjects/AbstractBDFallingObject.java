@@ -72,8 +72,9 @@ public abstract class AbstractBDFallingObject extends AbstractBDKillingObject {
 					// Fall one step if tile below is empty or killable
 					if (under instanceof BDEmpty || under instanceof IBDKillable) {
 						prepareMoveTo(Direction.SOUTH);
+						super.step();
 					}
-					// If one wants tumbling rocks/diamonds only when set in motion (does not account for falling on sand and such)
+					// If one wants tumbling rocks/diamonds only when set in motion *Stackable (does not account for falling on sand and such)
 					/*else if (left instanceof BDEmpty && (underLeft instanceof BDEmpty || underLeft instanceof IBDKillable)) {
                         prepareMoveTo(Direction.WEST);
                     } else if (right instanceof BDEmpty && (underRight instanceof BDEmpty || underRight instanceof IBDKillable)) {

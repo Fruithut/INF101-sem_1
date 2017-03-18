@@ -1,7 +1,9 @@
 package inf101.v17.boulderdash.bdobjects;
 
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,6 +12,7 @@ import inf101.v17.boulderdash.Direction;
 import inf101.v17.boulderdash.IllegalMoveException;
 import inf101.v17.boulderdash.Position;
 import inf101.v17.boulderdash.maps.BDMap;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 
 /**
@@ -19,6 +22,11 @@ import javafx.scene.paint.Paint;
  *
  */
 public class BDBug extends AbstractBDKillingObject implements IBDKillable {
+
+	/**
+	 * Will hold images of object
+	 */
+	private ImagePattern leftup, leftdown, rightup, rightdown;
 
 	/**
 	 * The amount of diamonds a bug turns into after it got killed.
@@ -37,6 +45,8 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 
 	// Counts the number of skipped steps.
 	protected int movedSince = 0;
+
+	protected int totalStep = 0;
 
 	/**
 	 * This field contains the sequence of moves the bug performs repeatedly.
@@ -70,6 +80,14 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 		super(owner);
 		this.initialPos = initialPos;
 		initTrajectory();
+		InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/bug/leftup.png");
+		leftup = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
+		InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/bug/leftdown.png");
+		leftdown = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
+		InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/bug/rightup.png");
+		rightup = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
+		InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/bug/rightdown.png");
+		rightdown = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
 	}
 
 	/**
@@ -89,11 +107,26 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 		this.radius = radius;
 		this.pause = pause < MIN_PAUSE ? MIN_PAUSE : pause;
 		initTrajectory();
+		InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/bug/leftup.png");
+		leftup = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
+		InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/bug/leftdown.png");
+		leftdown = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
+		InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/bug/rightup.png");
+		rightup = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
+		InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/bug/rightdown.png");
+		rightdown = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
 	}
 
 	@Override
 	public Paint getColor() {
-		return Color.GREEN;
+		int direction = totalStep % 40;
+		if (direction < 20) {
+			if (direction % 2 == 0) return leftup;
+			return leftdown;
+		} else if (direction >= 20) {
+			if (direction % 2 == 0) return rightup;
+			return rightdown;
+		} else return Color.BLACK;
 	}
 
 	/**
@@ -176,6 +209,7 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 			// The bug has not moved, so increase the pause counter.
 		} else {
 			movedSince++;
+			totalStep++;
 		}
 		super.step();
 	}

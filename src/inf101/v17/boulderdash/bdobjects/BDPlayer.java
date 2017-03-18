@@ -20,6 +20,10 @@ import java.io.InputStream;
  *
  */
 public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
+
+	/**
+	 * Will hold images of object
+	 */
 	private ImagePattern up, down, left, right, still;
 
 	/**
@@ -117,16 +121,20 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	}
 
 	/**
-	 * COMMENT ON THIS
+	 * Determines if the player can move in a certain direction based upon user-input.
 	 */
 	@Override
 	public void step() {
+		//Find player-position
 		Position playerPos = owner.getPlayer().getPosition();
 		Boolean legalMove = false;
 		Position playerNext = null;
 
 		if (askedToGo != null && owner.canGo(playerPos, askedToGo)) {
 			playerNext = playerPos.moveDirection(askedToGo);
+
+			//Store direction in -askedToGoLast (animation-behaviour)
+			askedToGoLast = askedToGo;
 
 			if (owner.get(playerNext) instanceof BDDiamond) {
 				diamondCnt++;
@@ -142,6 +150,8 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 			}
 		}
 
+		/*If movement in the given direction is allowed proceed to prepare
+		  player-movement and call step.*/
 		if (legalMove) {
 			try {
 				prepareMove(playerNext);
