@@ -5,11 +5,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import inf101.v17.boulderdash.Direction;
 import inf101.v17.boulderdash.Position;
-import inf101.v17.boulderdash.bdobjects.AbstractBDFallingObject;
 import inf101.v17.boulderdash.bdobjects.BDBug;
-import inf101.v17.boulderdash.bdobjects.BDDiamond;
 import inf101.v17.boulderdash.bdobjects.IBDObject;
 import inf101.v17.boulderdash.maps.BDMap;
 import inf101.v17.datastructures.IGrid;

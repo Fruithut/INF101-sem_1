@@ -21,14 +21,22 @@ public class BDMap {
 	 * Stores the data of the map
 	 */
 	protected IGrid<IBDObject> grid;
+	
 	/**
 	 * A separate reference to the player, since it is accessed quite
 	 * frequently.
 	 */
 	protected BDPlayer player;
 
-	/**HASHVERSION*/
-	HashMap<IBDObject, Position> hashPosition = new HashMap<>();
+	/**
+	 * Hashmap to connect an IBDObject with a particular Position-object
+	 */
+	protected HashMap<IBDObject, Position> hashPosition = new HashMap<>();
+
+	/**
+	 * Determines if soundeffects are to played or not
+	 */
+	private static boolean soundOn = false;
 
 
 	/**
@@ -123,7 +131,6 @@ public class BDMap {
 			for (int y = 0; y < height; y++) {
 				IBDObject obj = makeObject(inputmap.get(x, y), x, y);
 				grid.set(x, y, obj);
-				// TODO: HASHVERSION note: obj.getpos gir error
 				hashPosition.put(obj, new Position(x,y));
 			}
 		}
@@ -281,12 +288,11 @@ public class BDMap {
 			throw new IndexOutOfBoundsException();
 		}
 		grid.set(x, y, element);
-		// TODO: HASHVERSION obj.getpos() gives error
 		hashPosition.put(element, new Position(x,y));
 	}
 
 	/**
-	 * EMPTY
+	 * Runs through all of the elements contained in the map and calls their step()-method
 	 */
 	public void step() {
 		for (int i = 0; i < grid.getWidth(); i++) {
@@ -295,7 +301,7 @@ public class BDMap {
 			}
 		}
 
-		//Alternative
+		//Alternative hash-iteration
 		/*try {
 			for (IBDObject x : hashPosition.keySet()) {
 				x.step();
@@ -304,4 +310,20 @@ public class BDMap {
 			//DO NOTHING
 		}*/
 	}
+
+	/**
+	 * Sets sound to on or off.
+	 * @param soundOn
+	 */
+	public static void setSound(boolean soundOn) {
+		BDMap.soundOn = soundOn;
+	}
+
+	/**
+	 * @returns a boolean based upon if soundeffects has been turned on or off
+	 */
+	public static boolean isSoundOn() {
+		return soundOn;
+	}
+	
 }

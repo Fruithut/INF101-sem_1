@@ -80,14 +80,21 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 		super(owner);
 		this.initialPos = initialPos;
 		initTrajectory();
-		InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/bug/leftup.png");
-		leftup = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
-		InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/bug/leftdown.png");
-		leftdown = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
-		InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/bug/rightup.png");
-		rightup = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
-		InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/bug/rightdown.png");
-		rightdown = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
+		
+		//Find graphics
+		try {
+			InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/bug/leftup.png");
+			leftup = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
+			InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/bug/leftdown.png");
+			leftdown = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
+			InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/bug/rightup.png");
+			rightup = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
+			InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/bug/rightdown.png");
+			rightdown = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			System.out.println("An imagefile is missing!");
+		}
 	}
 
 	/**
@@ -107,14 +114,21 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 		this.radius = radius;
 		this.pause = pause < MIN_PAUSE ? MIN_PAUSE : pause;
 		initTrajectory();
-		InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/bug/leftup.png");
-		leftup = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
-		InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/bug/leftdown.png");
-		leftdown = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
-		InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/bug/rightup.png");
-		rightup = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
-		InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/bug/rightdown.png");
-		rightdown = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
+		
+		//Find graphics
+		try {
+			InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/bug/leftup.png");
+			leftup = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
+			InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/bug/leftdown.png");
+			leftdown = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
+			InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/bug/rightup.png");
+			rightup = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
+			InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/bug/rightdown.png");
+			rightdown = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			System.out.println("An imagefile is missing!");
+		}
 	}
 
 	@Override
@@ -166,6 +180,8 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 		for (Position p : toDiamonds) {
 			owner.set(p.getX(), p.getY(), new BDDiamond(owner));
 		}
+		if (owner.isSoundOn()) BDSounds.getSound(3).play();
+		
 	}
 
 	/**

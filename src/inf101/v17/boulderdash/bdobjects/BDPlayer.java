@@ -2,7 +2,6 @@ package inf101.v17.boulderdash.bdobjects;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 
 import inf101.v17.boulderdash.Direction;
 import inf101.v17.boulderdash.IllegalMoveException;
@@ -10,7 +9,6 @@ import inf101.v17.boulderdash.Position;
 import inf101.v17.boulderdash.maps.BDMap;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
-
 import java.io.InputStream;
 
 /**
@@ -45,21 +43,29 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	 * Number of diamonds collected so far.
 	 */
 	protected int diamondCnt = 0;
-
+	
 	public BDPlayer(BDMap owner) {
 		super(owner);
-
-		InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/player/up.png");
-		up = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
-		InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/player/down.png");
-		down = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
-		InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/player/left.png");
-		left = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
-		InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/player/right.png");
-		right = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
-		InputStream resourceAsStream5 = getClass().getResourceAsStream("../images/player/still.png");
-		still = new ImagePattern(new Image(resourceAsStream5), 0, 0, 1,1, true);
+        
+		//Find graphics
+		try {
+            InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/player/up.png");
+            up = new ImagePattern(new Image(resourceAsStream1), 0, 0, 1,1, true);
+            InputStream resourceAsStream2 = getClass().getResourceAsStream("../images/player/down.png");
+            down = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
+            InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/player/left.png");
+            left = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
+            InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/player/right.png");
+            right = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
+            InputStream resourceAsStream5 = getClass().getResourceAsStream("../images/player/still.png");
+            still = new ImagePattern(new Image(resourceAsStream5), 0, 0, 1,1, true);
+        } catch (IllegalArgumentException e) {
+		    e.printStackTrace();
+            System.out.println("An imagefile is missing!");
+        }
 	}
+	
+	
 
 	/**
 	 * @return Gets proper image of player based on where it's headed
@@ -108,7 +114,10 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 
 	@Override
 	public void kill() {
-		this.alive = false;
+	    if (owner.isSoundOn()) {
+	        BDSounds.getSound(1).play();
+        }
+	    this.alive = false;
 	}
 
 	/**
@@ -133,15 +142,18 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 		if (askedToGo != null && owner.canGo(playerPos, askedToGo)) {
 			playerNext = playerPos.moveDirection(askedToGo);
 
-			//Store direction in -askedToGoLast (animation-behaviour)
+			//Store direction in askedToGoLast (animation-behaviour)
 			askedToGoLast = askedToGo;
 
 			if (owner.get(playerNext) instanceof BDDiamond) {
 				diamondCnt++;
+				if (owner.isSoundOn()) BDSounds.getSound(0).play();
 				legalMove = true;
 			} else if (owner.get(playerNext) instanceof BDRock) {
 				if (((BDRock) owner.get(playerNext)).push(askedToGo)) {
 					legalMove = true;
+				} else {
+					if (owner.isSoundOn()) BDSounds.getSound(4).play();
 				}
 			} else if (owner.get(playerNext) instanceof BDBug) {
 				kill();
@@ -156,16 +168,18 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 			try {
 				prepareMove(playerNext);
 				super.step();
+				if (owner.isSoundOn()) BDSounds.getSound(6).play();
 				askedToGoLast = askedToGo;
-				askedToGo = null;
 			} catch (IllegalMoveException e) {
 				e.printStackTrace();
 			}
 		}
+		askedToGo = null;
 	}
-
+	
 	@Override
 	public boolean isKillable() {
 		return true;
 	}
+	
 }

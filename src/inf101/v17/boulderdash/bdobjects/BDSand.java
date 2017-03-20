@@ -22,8 +22,15 @@ public class BDSand extends AbstractBDObject {
 
 	public BDSand(BDMap owner) {
 		super(owner);
-		InputStream resourceAsStream = getClass().getResourceAsStream("../images/sand.png");
-		image = new ImagePattern(new Image(resourceAsStream), 0, 0, 1,1, true);
+		
+		//Find graphics
+		try {
+			InputStream resourceAsStream = getClass().getResourceAsStream("../images/sand.png");
+			image = new ImagePattern(new Image(resourceAsStream), 0, 0, 1,1, true);
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+			System.out.println("An imagefile is missing");
+		}
 	}
 
 	@Override

@@ -13,6 +13,10 @@ import inf101.v17.boulderdash.maps.BDMap;
 import inf101.v17.datastructures.IGrid;
 import inf101.v17.datastructures.MyGrid;
 
+/**
+ * This class contains tests for the behaviour of diamonds and rocks.
+ * Implicit some of the players behaviours are tested.
+ */
 public class FallingTest {
 
 	private BDMap map;
@@ -182,6 +186,37 @@ public class FallingTest {
 		} else
 			return pos;
 	}
+
+	/**
+	 * Test to see if a rock tumbles downhill
+	 */
+	@Test
+	public void rockTumbles() {
+		IGrid<Character> grid = new MyGrid<>(4, 5, ' ');
+		grid.set(0,0, 'r');
+		grid.set(1,0, 'r');
+		grid.set(2,0, 'r');
+		grid.set(3,0, 'r');
+
+		grid.set(1,1, 'r');
+		grid.set(2,1, 'r');
+		grid.set(3,1, 'r');
+
+		grid.set(2,2, 'r');
+		grid.set(3,2, 'r');
+
+		grid.set(3,3, 'r');
+		grid.set(3,4, 'r');
+		map = new BDMap(grid);
+
+		IBDObject obj = map.get(3, 4);
+		assertTrue(obj instanceof BDRock);
+
+		for (int i = 0; i < 25; i++) {
+			map.step();
+		}
+		assertEquals(map.get(0,1), obj);
+	}
 	
 	//Rock tests that does not include falling below
 	/**
@@ -259,10 +294,8 @@ public class FallingTest {
 			map.getPlayer().keyPressed(KeyCode.LEFT);
 			map.step();
 		}
-
 		assertEquals(obj1,map.get(3,1));
 		assertEquals(obj2,map.get(2,1));
 		assertEquals(obj3,map.get(1,1));
 	}
-
 }

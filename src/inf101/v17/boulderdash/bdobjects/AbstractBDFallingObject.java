@@ -52,7 +52,7 @@ public abstract class AbstractBDFallingObject extends AbstractBDKillingObject {
 		// The object cannot fall if it is on the lowest row.
 		if (pos.getY() > 0) {
 			try {
-				// Get the object in the tile below and to the left and right.
+				// Get the object in the tile below and to the left and right and also beneath left and right.
 				Position below = pos.moveDirection(Direction.SOUTH), west = pos.moveDirection(Direction.WEST),
                          east = pos.moveDirection(Direction.EAST), belowWest = west.moveDirection(Direction.SOUTH),
 						 belowEast = east.moveDirection(Direction.SOUTH);
@@ -63,7 +63,7 @@ public abstract class AbstractBDFallingObject extends AbstractBDKillingObject {
 					right = owner.get(east);
 					underRight = owner.get(belowEast);
 				}
-                if (pos.getX()-1 > 0) {
+                if (pos.getX() > 0) {
 					left = owner.get(west);
 					underLeft = owner.get(belowWest);
 				}
@@ -73,28 +73,24 @@ public abstract class AbstractBDFallingObject extends AbstractBDKillingObject {
 					if (under instanceof BDEmpty || under instanceof IBDKillable) {
 						prepareMoveTo(Direction.SOUTH);
 						super.step();
-					}
-					// If one wants tumbling rocks/diamonds only when set in motion *Stackable (does not account for falling on sand and such)
-					/*else if (left instanceof BDEmpty && (underLeft instanceof BDEmpty || underLeft instanceof IBDKillable)) {
-                        prepareMoveTo(Direction.WEST);
-                    } else if (right instanceof BDEmpty && (underRight instanceof BDEmpty || underRight instanceof IBDKillable)) {
-                        prepareMoveTo(Direction.EAST);
-					}*/ else {
+					} else {
+						if (owner.isSoundOn() && this instanceof BDRock) BDSounds.getSound(5).play();
 						falling = false;
 					}
 				} else {
-					// start falling if tile below is empty
-					falling = under instanceof BDEmpty;
+					// start falling if tile below is empty or a bug (allows killing of bugs with pushable/tumbling rocks)
+					// *rocks and diamonds resting on top of a bug will kill it
+					falling = under instanceof BDEmpty || under instanceof BDBug;
 					fallingTimeWaited = 1;
 				}
 				/*Rocks and diamonds will tumble first to the the left if possible if not then to the right.
-				* The player will not be killed if standing directly to the left or right of a falling object that
-				* would otherwise have fallen over*/
+				* Tumbling rocks and diamonds can kill both the player and the bugs, but will not kill the player if
+				* the player is located directly to the side of an object that would otherwise have tumbled*/
 				if (!falling && !(under instanceof BDSand) && !(under instanceof IBDKillable)){
-					if (left instanceof BDEmpty && (underLeft instanceof BDEmpty || underLeft instanceof IBDKillable)) {
+					if ((left instanceof BDEmpty || left instanceof BDBug) && (underLeft instanceof BDEmpty || underLeft instanceof IBDKillable)) {
 						prepareMoveTo(Direction.WEST);
 						falling = true;
-					} else if (right instanceof BDEmpty && (underRight instanceof BDEmpty || underRight instanceof IBDKillable)) {
+					} else if ((right instanceof BDEmpty || right instanceof BDBug) && (underRight instanceof BDEmpty || underRight instanceof IBDKillable)) {
 						prepareMoveTo(Direction.EAST);
 						falling = true;
 					}

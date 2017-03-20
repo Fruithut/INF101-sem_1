@@ -79,7 +79,12 @@
         
 6. **Hvordan kunne man lagt til en ny type felt?**
         
-        Svar:
+        Skulle vi lagt til et nytt type felt/objekt-type kunne man f.eks laget bomber som arvet fra
+        AbstractBDFallingObject og kanskje implementerte en push funksjon og hadde step() og getColor() slik som de
+        andre objektene. I objekte igjen kunne man kanskje lagt til ekstra funksjonalitet som destruksjon av omgivelser
+        o.l. Der er dermed ikke sagt at man bare trenger å lage bomber, mange andre typer objekt kunne blitt laget
+        med å utnytte funksjonaliteten som vi allerede finner i de Abstrakte-klassene og interfacene vi allerede har
+        tilgjengelig.
         
 7. **Hvordan er det implementert at en diamant faller?**
         
@@ -93,21 +98,66 @@
         posisjon ved neste iterering av programmet (step).
         
    
-3.1     **Spørsmål** //TODO?
+3.1 **Spørsmål**
         
         - Hvorfor trenger vi getPosition-metoden? Kunne vi like gjerne ha lagret posisjonen i hvert enkelt objekt?
-          
+           Svar: Vi trenger getPosition-metoden for å finne hvilke x- og y-koordinater som er forbundet med et gitt objekt.
+           Å ha implemtasjonen av posisjonsdataene liggende på toppen av objektene og ikke inn i dem gjør det enklere ved
+           implementering av nye objekter og funksjoner, og man slipper mye ekstra kode.
+           
         - Hvis vi bruker et hashmap til å forenkle jobben med å finne posisjoner, har vi laget en sammenheng mellom to 
           av feltvariablene; grid-et og hashmap-et. Hva er sammenhengen? (Her har vi en datainvariant, en begrensing på 
           datarepresentasjonen i objektet.)
-          
+           Svar: Sammenhengen er at griden holder på IBDObject og hashmapen kobler et IBDObject til et Position-objekt.
+           Position-objektet fungerer er som en søkenøkkel. Her kan man se at x- og y-koordinatene i griden alltid
+           tilsvarer koordinatene som man kan finne i Position-objektet knytt til et IBDObjekt.
+           
         - Ville vi fått en tilsvarende sammenheng mellom grid-et i BDMap og BD-objektene våre om vi lagret posisjonen i 
           hvert enkelt objekt? Kan det være problematisk?
+           Ved riktig implementering ville koordinatene i grid-et tilsvart koordinat-variablene i et gitt objekt 
+           som befinner seg der. Dette er noe tungvindt og problematisk når et objekt skal skifte posisjon da man 
+           evt måtte ha brukt get og set-metoder på alle objektene som befinner seg i griden der for å skifte 
+           posisjonene til dem.
           
 
    #Credits:
-   **Music**: "Pixelland Kevin MacLeod (incompetech.com)
-           Licensed under Creative Commons: By Attribution 3.0 License
-           http://creativecommons.org/licenses/by/3.0/"
+   **Music**: 
+ 
+                "Pixelland Kevin MacLeod (incompetech.com)
+                Licensed under Creative Commons: By Attribution 3.0 License
+                http://creativecommons.org/licenses/by/3.0/"
            
-   **Sprites**: "INSERT HERE".
+   **Sprites**: 
+   
+                "Cute Platformer Sisters" By Master484 (http://opengameart.org/users/master484).
+                License: http://creativecommons.org/licenses/by/3.0/
+                
+                "32x32 Fantasy tileset" By Jerom (http://opengameart.org/users/jerom).
+                License: http://creativecommons.org/licenses/by/3.0/
+                
+                
+   **Sound effects**: 
+                
+               //See the sfx-folder for files
+               
+              "bugdeath" - By qubodup (http://opengameart.org/users/qubodup)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
+              
+              "diamond" - By ProjectsU012 (https://freesound.org/people/ProjectsU012/)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
+              
+              "death" - By josepharaoh99 (https://freesound.org/people/josepharaoh99/)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
+              
+              "miss" - By qubodup (https://freesound.org/people/qubodup/)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
+              
+              "move" - By n_audioman (https://www.freesound.org/people/n_audioman/)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
+              
+              "push" - By Ekokubza123 (https://freesound.org/people/Ekokubza123/)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
+              
+              "thump" - By LittleRobotSoundFactory (https://www.freesound.org/people/LittleRobotSoundFactory/)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
+   

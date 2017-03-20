@@ -31,7 +31,7 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 	/**
 	 * Determines how many milliseconds pass between two steps of the program.
 	 */
-	private static final int SPEED = 120;
+	private static final int SPEED = 110;
 
 	private static BDMap theMap;
 
@@ -46,6 +46,9 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 	public static final double NOMINAL_WIDTH = 1900, NOMINAL_HEIGHT = 1000;
 
 	private Stage stage;
+	
+	//Declared outside playMusic() method, garbage-collection would otherwise clean it during runtime
+	private MediaPlayer player;
 
 	public BoulderDashGUI() {
 		this.map = theMap;
@@ -63,18 +66,6 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 
 	@Override
 	public void start(Stage stage) throws Exception {
-
-		//Finds and plays music
-		try{URL music = getClass().getResource("../gui/sounds/Pixelland.mp3");
-			Media song = new Media(music.toString());
-			MediaPlayer player = new MediaPlayer(song);
-			player.play();
-			player.setVolume(0.5);
-			System.out.println("Volume: " + player.getVolume());
-		} catch (MissingResourceException e) {
-			e.printStackTrace();
-		}
-
 		this.stage = stage;
 		double spacing = 10;
 		
@@ -88,8 +79,8 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 
 		message = new Text(10, 0, "");
 		message.setFont(new Font(26));
-		message.setFill(Color.ORANGERED);
-		message.setText("Diamonds: " + map.getPlayer().numberOfDiamonds());
+		message.setFill(Color.WHITE);
+		message.setText("Treasures: " + map.getPlayer().numberOfDiamonds());
 
 		mapComponent = new BDMapComponent(map);
 		mapComponent.widthProperty().bind(scene.widthProperty());
@@ -104,8 +95,7 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 
 			@Override
 			public void handle(long now) {
-				//750_000 as opposed to the original 1_000_000, speeds up the game a little
-				if (now - lastUpdateTime > SPEED * 750_000) {
+				if (now - lastUpdateTime > SPEED * 1_000_000) {
 					lastUpdateTime = now;
 					step();
 				}
@@ -123,12 +113,32 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 		stage.addEventHandler(KeyEvent.KEY_PRESSED, this);
 		timer.start();
 		stage.show();
+
+		playMusic();
+	}
+
+	/**
+	 * Tries to find the song located in the sound folder and then play it
+	 */
+	private void playMusic() {
+		//Finds and plays backgrounds music
+		try{URL music = getClass().getResource("../gui/backgroundtracks/Pixelland.mp3");
+			Media song = new Media(music.toString());
+			player = new MediaPlayer(song);
+			
+			player.setVolume(0.4);
+			player.setCycleCount(MediaPlayer.INDEFINITE);
+			player.play();
+			System.out.println("Volume: " + player.getVolume());
+		} catch (MissingResourceException e) {
+			e.printStackTrace();
+		}
 	}
 
 	protected void step() {
 		if (map.getPlayer().isAlive()) {
 			map.step();
-			message.setText("DIAMONDS: " + map.getPlayer().numberOfDiamonds());
+			message.setText("TREASURES: " + map.getPlayer().numberOfDiamonds());
 		} else {
 			message.setText("GAME OVER!");
 		}

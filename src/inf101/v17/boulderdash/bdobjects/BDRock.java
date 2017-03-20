@@ -5,6 +5,7 @@ import inf101.v17.boulderdash.IllegalMoveException;
 import inf101.v17.boulderdash.Position;
 import inf101.v17.boulderdash.maps.BDMap;
 import javafx.scene.image.Image;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 
@@ -23,8 +24,15 @@ public class BDRock extends AbstractBDFallingObject {
      */
     public BDRock(BDMap owner) {
         super(owner);
-        InputStream resourceAsStream = getClass().getResourceAsStream("../images/rock.png");
-        image = new ImagePattern(new Image(resourceAsStream), 0, 0, 1,1, true);
+        
+        //Find graphics
+        try {
+            InputStream resourceAsStream = getClass().getResourceAsStream("../images/rock.png");
+            image = new ImagePattern(new Image(resourceAsStream), 0, 0, 1,1, true);
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            System.out.println("An imagefile is missing!");
+        }
     }
 
 
@@ -41,6 +49,7 @@ public class BDRock extends AbstractBDFallingObject {
                     try {
                         prepareMove(rockPos.getX()+1,rockPos.getY());
                         step();
+                        if (owner.isSoundOn()) BDSounds.getSound(2).play();
                         return true;
                     } catch (IllegalMoveException e) {
                         return false;
@@ -52,6 +61,7 @@ public class BDRock extends AbstractBDFallingObject {
                     try {
                         prepareMove(rockPos.getX()-1,rockPos.getY());
                         step();
+                        if (owner.isSoundOn()) BDSounds.getSound(2).play();
                         return true;
                     } catch (IllegalMoveException e) {
                         return false;
