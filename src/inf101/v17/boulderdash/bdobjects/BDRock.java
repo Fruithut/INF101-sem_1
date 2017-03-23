@@ -5,7 +5,6 @@ import inf101.v17.boulderdash.IllegalMoveException;
 import inf101.v17.boulderdash.Position;
 import inf101.v17.boulderdash.maps.BDMap;
 import javafx.scene.image.Image;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 
@@ -41,9 +40,22 @@ public class BDRock extends AbstractBDFallingObject {
      * @param dir the direction of the stone if pushed
      * @return
      */
-    public boolean push(Direction dir) {
+    public boolean push(Direction dir){
         Position rockPos = this.getPosition();
-        switch (dir) {
+        Position nextPos = rockPos.moveDirection(dir);
+        if (owner.canGo(nextPos) && owner.get(nextPos) instanceof BDEmpty && 
+                (dir.equals(Direction.EAST) || (dir.equals(Direction.WEST)))) {
+            try {
+                prepareMove(nextPos);
+                step();
+                if (owner.isSoundOn()) BDSounds.getSound(2).play();
+                return true;
+            } catch (IllegalMoveException e) {
+                return false;
+            }
+        }
+        return false;
+        /*switch (dir) {
             case EAST: if (owner.canGo(rockPos, dir)) {
                 if (owner.get(rockPos.getX()+1,rockPos.getY()) instanceof BDEmpty) {
                     try {
@@ -69,7 +81,7 @@ public class BDRock extends AbstractBDFallingObject {
                 }
             }
             default: return false;
-        }
+        }*/
     }
 
     @Override
