@@ -31,7 +31,7 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 	/**
 	 * Determines how many milliseconds pass between two steps of the program.
 	 */
-	private static final int SPEED = 110;
+	private static final int SPEED = 120;
 
 	private static BDMap theMap;
 

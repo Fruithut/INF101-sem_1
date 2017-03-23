@@ -160,4 +160,13 @@
               
               "thump" - By LittleRobotSoundFactory (https://www.freesound.org/people/LittleRobotSoundFactory/)
               License: https://creativecommons.org/publicdomain/zero/1.0/
+              
+              "knock" - By tweeterdj (https://freesound.org/people/tweeterdj/)
+              License: https://creativecommons.org/licenses/by/3.0/
+              
+              "dooropen" - By club sound (https://freesound.org/people/club%20sound/)
+              License: https://creativecommons.org/licenses/by-nc/3.0/
+              
+              "key" - By lulyc (https://freesound.org/people/lulyc/)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
    

@@ -164,7 +164,13 @@ public class BDMap {
 			return new BDDiamond(this);
 		} else if (c == 'r') {
 			return new BDRock(this);
-		}
+		} else if (c == 'x') {
+			return new BDBox(this);
+		} else if (c == 'k') {
+			return new BDKey(this);
+		} else if (c == 'g') {
+			return new BDGate(this);
+		} 
 
 		System.err.println("Illegal character in map definition at (" + x + ", " + y + "): '" + c + "'");
 		return new BDEmpty(this);

@@ -23,7 +23,6 @@ public class BDRock extends AbstractBDFallingObject {
      */
     public BDRock(BDMap owner) {
         super(owner);
-        
         //Find graphics
         try {
             InputStream resourceAsStream = getClass().getResourceAsStream("../images/rock.png");
@@ -48,40 +47,12 @@ public class BDRock extends AbstractBDFallingObject {
             try {
                 prepareMove(nextPos);
                 step();
-                if (owner.isSoundOn()) BDSounds.getSound(2).play();
                 return true;
             } catch (IllegalMoveException e) {
                 return false;
             }
         }
         return false;
-        /*switch (dir) {
-            case EAST: if (owner.canGo(rockPos, dir)) {
-                if (owner.get(rockPos.getX()+1,rockPos.getY()) instanceof BDEmpty) {
-                    try {
-                        prepareMove(rockPos.getX()+1,rockPos.getY());
-                        step();
-                        if (owner.isSoundOn()) BDSounds.getSound(2).play();
-                        return true;
-                    } catch (IllegalMoveException e) {
-                        return false;
-                    }
-                }
-            }
-            case WEST: if (owner.canGo(rockPos, dir)) {
-                if (owner.get(rockPos.getX()-1,rockPos.getY()) instanceof BDEmpty) {
-                    try {
-                        prepareMove(rockPos.getX()-1,rockPos.getY());
-                        step();
-                        if (owner.isSoundOn()) BDSounds.getSound(2).play();
-                        return true;
-                    } catch (IllegalMoveException e) {
-                        return false;
-                    }
-                }
-            }
-            default: return false;
-        }*/
     }
 
     @Override

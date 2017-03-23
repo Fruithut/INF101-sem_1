@@ -44,6 +44,11 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	 */
 	protected int diamondCnt = 0;
 	
+	/**
+	 * Number of keys collected so far
+	 */
+	protected int keyCnt = 0;
+	
 	public BDPlayer(BDMap owner) {
 		super(owner);
         
@@ -130,6 +135,15 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	}
 
 	/**
+	 * Returns the number of keys collected so far.
+	 *
+	 * @return
+	 */
+	public int numberOfKeys() {
+		return keyCnt;
+	}
+
+	/**
 	 * Determines if the player can move in a certain direction based upon user-input.
 	 */
 	@Override
@@ -152,11 +166,26 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 			} else if (owner.get(playerNext) instanceof BDRock) {
 				if (((BDRock) owner.get(playerNext)).push(askedToGo)) {
 					legalMove = true;
+					if (owner.isSoundOn()) BDSounds.getSound(2).play();
 				} else {
 					if (owner.isSoundOn()) BDSounds.getSound(4).play();
 				}
 			} else if (owner.get(playerNext) instanceof BDBug) {
 				kill();
+			} else if (owner.get(playerNext) instanceof BDBox) { 
+				((BDBox) owner.get(playerNext)).pop();
+				if (owner.isSoundOn()) BDSounds.getSound(2).play();
+			} else if (owner.get(playerNext) instanceof BDKey) {
+				keyCnt++;
+				if (owner.isSoundOn()) BDSounds.getSound(7).play();
+				legalMove = true;
+			} else if (owner.get(playerNext) instanceof BDGate) {
+				if (((BDGate) owner.get(playerNext)).unlock(this)) {
+					legalMove = true;
+					if (owner.isSoundOn()) BDSounds.getSound(9).play();
+				} else {
+					if (owner.isSoundOn()) BDSounds.getSound(8).play();
+				}
 			} else {
 				legalMove = true;
 			}

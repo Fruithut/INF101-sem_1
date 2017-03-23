@@ -23,6 +23,9 @@ public class BDSounds {
             AudioClip rockMiss = new AudioClip(getClass().getResource("../sfx/miss.mp3").toString());
             AudioClip rockThump = new AudioClip(getClass().getResource("../sfx/thump.wav").toString());
             AudioClip move = new AudioClip(getClass().getResource("../sfx/move.wav").toString());
+            AudioClip key = new AudioClip(getClass().getResource("../sfx/key.wav").toString());
+            AudioClip doorknock = new AudioClip(getClass().getResource("../sfx/knock.wav").toString());
+            AudioClip dooropen = new AudioClip(getClass().getResource("../sfx/dooropen.wav").toString());
             
             //Adjust volume
             rockPush.setVolume(0.65);
@@ -37,6 +40,9 @@ public class BDSounds {
             soundList.add(rockMiss);
             soundList.add(rockThump);
             soundList.add(move);
+            soundList.add(key);
+            soundList.add(doorknock);
+            soundList.add(dooropen);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
             System.out.println("A soundfile is missing!");
