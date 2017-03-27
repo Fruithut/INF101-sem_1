@@ -344,7 +344,6 @@ public class BDMap {
 	 * @return
 	 */
 	public static int getDiamondCnt() {
-		System.out.println(diamondCnt);
 		return diamondCnt;
 	}
 
