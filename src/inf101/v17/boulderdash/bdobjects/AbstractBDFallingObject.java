@@ -98,7 +98,7 @@ public abstract class AbstractBDFallingObject extends AbstractBDKillingObject {
 			} catch (IllegalMoveException e) {
 				// This should never happen.
 				System.out.println(e);
-				System.exit(1);
+				System.exit(0);
 			}
 		}
 	}

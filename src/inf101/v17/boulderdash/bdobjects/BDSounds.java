@@ -26,12 +26,15 @@ public class BDSounds {
             AudioClip key = new AudioClip(getClass().getResource("../sfx/key.wav").toString());
             AudioClip doorknock = new AudioClip(getClass().getResource("../sfx/knock.wav").toString());
             AudioClip dooropen = new AudioClip(getClass().getResource("../sfx/dooropen.wav").toString());
+            AudioClip exit = new AudioClip(getClass().getResource("../sfx/exit.wav").toString());
             
             //Adjust volume
             rockPush.setVolume(0.65);
             move.setVolume(0.65);
             rockMiss.setVolume(0.7);
             rockThump.setVolume(1.4);
+            doorknock.setVolume(9);
+            exit.setVolume(20);
             
             soundList.add(diamondPickup);
             soundList.add(playerDeath);
@@ -43,9 +46,12 @@ public class BDSounds {
             soundList.add(key);
             soundList.add(doorknock);
             soundList.add(dooropen);
-        } catch (IllegalArgumentException e) {
+            soundList.add(exit);
+        } catch (Exception e) {
+            System.out.println("An sfx-file is missing or has been altered!");
+            System.out.println("Cancel out sfx from 'Main' by commenting out BDSounds");
             e.printStackTrace();
-            System.out.println("A soundfile is missing!");
+            System.exit(2);
         }
     }
 
@@ -54,6 +60,7 @@ public class BDSounds {
      * @returns An audioclip from the arraylist
      */
     static AudioClip getSound(int fileNumber) {
+        //Size limitation on get method
         if (fileNumber > soundList.size()-1) {
             fileNumber = soundList.size()-1;
         } else if (fileNumber < 0) {

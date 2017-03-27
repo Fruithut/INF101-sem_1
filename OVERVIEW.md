@@ -1,5 +1,5 @@
 # Oversikt
-- "Studer filene i inf101.v17.boulderdash.bdobjects først"
+- "Studer filene i inf101.v17.boulderdash.bdobjects først" Oppgave 2.2
 1. **Hvilke interface finnes? Hva er sammenhengen mellom dem og hva brukes de til?**
 
         Av interfaces i 'bdobjects' så finner man:
@@ -118,6 +118,27 @@
            som befinner seg der. Dette er noe tungvindt og problematisk når et objekt skal skifte posisjon da man 
            evt måtte ha brukt get og set-metoder på alle objektene som befinner seg i griden der for å skifte 
            posisjonene til dem.
+           
+        
+   **Bonus oppgaver gjennomført:**
+        
+        *Hashmap
+        *AI for spiller (enkel variant)
+        *Fancy rocks
+        *Generell grafikk
+        *Musikk og lydeffekter
+        *Ny bane
+            + Nye objekter
+        
+   **Ekstra klasser utenom de obligatoriske:**
+      
+         *AIBDPlayer
+         *BDBox
+         *BDKey
+         *BDGate
+         *BDSounds
+            + NB: Laget en playMusic() metode i BoulderDashGUI og noen små ektra 
+                  hjelpemetoder nederst i BDMap.
           
 
    #Credits:
@@ -168,5 +189,8 @@
               License: https://creativecommons.org/licenses/by-nc/3.0/
               
               "key" - By lulyc (https://freesound.org/people/lulyc/)
+              License: https://creativecommons.org/publicdomain/zero/1.0/
+              
+              "exit" - By Imitatia Dei (https://freesound.org/people/Imitatia%20Dei/)
               License: https://creativecommons.org/publicdomain/zero/1.0/
    

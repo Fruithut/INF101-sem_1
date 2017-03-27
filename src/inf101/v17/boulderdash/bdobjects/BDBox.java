@@ -26,9 +26,10 @@ public class BDBox extends AbstractBDObject {
             box2 = new ImagePattern(new Image(resourceAsStream2), 0, 0, 1,1, true);
             InputStream resourceAsStream3 = getClass().getResourceAsStream("../images/box3.png");
             box3 = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
-        } catch (IllegalArgumentException e) {
+        } catch (NullPointerException e) {
             e.printStackTrace();
             System.out.println("An imagefile is missing!");
+            System.exit(1);
         }
     }
 

@@ -1,10 +1,7 @@
 package inf101.v17.boulderdash.bdobjects.tests;
 
 import inf101.v17.boulderdash.Position;
-import inf101.v17.boulderdash.bdobjects.BDEmpty;
-import inf101.v17.boulderdash.bdobjects.BDPlayer;
-import inf101.v17.boulderdash.bdobjects.BDSand;
-import inf101.v17.boulderdash.bdobjects.IBDObject;
+import inf101.v17.boulderdash.bdobjects.*;
 import inf101.v17.boulderdash.maps.BDMap;
 import inf101.v17.datastructures.IGrid;
 import inf101.v17.datastructures.MyGrid;
@@ -15,8 +12,11 @@ import static org.junit.Assert.*;
 
 /**
  * Tests different aspects of BDPlayers behaviour 
- * Note: Some tests regarding the player are contained within
+ * 
+ * Notes: *Some tests regarding the player are contained within
  * 'FallingTest'-class.
+ * *Many of the "playertests" accounts for the AIBDPlayers behaviour since
+ * that class only generates random directions
  */
 public class PlayerTest {
     
@@ -131,5 +131,53 @@ public class PlayerTest {
                 fail("The player did not pickup the diamonds");
             }
         }
+    }
+
+    /**
+     * Tests to see if the player is able to break the box and obtain a key
+     */
+    @Test
+    public void playerGetsKey() {
+        IGrid<Character> grid = new MyGrid<>(2, 1, ' ');
+        grid.set(0, 0, 'p');
+        grid.set(1, 0, 'x');
+        map = new BDMap(grid);
+
+        IBDObject player = map.get(new Position(0,0));
+        assertTrue(player instanceof BDPlayer);
+
+        IBDObject box = map.get(new Position(1,0));
+        assertTrue(box instanceof BDBox);
+        
+        for (int i = 0; i < 4; i++) {
+            map.getPlayer().keyPressed(KeyCode.RIGHT);
+            map.step();
+        }
+        assertEquals(1, map.getPlayer().numberOfKeys());
+    }
+
+    /**
+     * Tests to see if the player is able to open a gate when key is acquired
+     */
+    @Test
+    public void playerOpensGate() {
+        IGrid<Character> grid = new MyGrid<>(3, 1, ' ');
+        grid.set(0, 0, 'p');
+        grid.set(1, 0, 'g');
+        map = new BDMap(grid);
+
+        IBDObject player = map.get(new Position(0,0));
+        assertTrue(player instanceof BDPlayer);
+
+        IBDObject gate = map.get(new Position(1,0));
+        assertTrue(gate instanceof BDGate);
+        
+        map.getPlayer().setKeys(1);
+
+        for (int i = 0; i < 2; i++) {
+            map.getPlayer().keyPressed(KeyCode.RIGHT);
+            map.step();
+        }
+        assertTrue(map.get(new Position(2,0)) instanceof BDPlayer);
     }
 }

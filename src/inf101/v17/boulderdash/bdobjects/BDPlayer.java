@@ -10,6 +10,7 @@ import inf101.v17.boulderdash.maps.BDMap;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
 /**
  * An implementation of the player.
@@ -51,7 +52,6 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	
 	public BDPlayer(BDMap owner) {
 		super(owner);
-        
 		//Find graphics
 		try {
             InputStream resourceAsStream1 = getClass().getResourceAsStream("../images/player/up.png");
@@ -64,9 +64,10 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
             right = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
             InputStream resourceAsStream5 = getClass().getResourceAsStream("../images/player/still.png");
             still = new ImagePattern(new Image(resourceAsStream5), 0, 0, 1,1, true);
-        } catch (IllegalArgumentException e) {
-		    e.printStackTrace();
-            System.out.println("An imagefile is missing!");
+        } catch (NullPointerException e) {
+			e.printStackTrace();
+			System.out.println("An imagefile is missing!");
+			System.exit(1);
         }
 	}
 	
@@ -144,7 +145,16 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 	}
 
 	/**
+	 * Set the amount of keys the player has
+	 * @param keyCnt
+	 */
+	public void setKeys(int keyCnt) {
+		this.keyCnt = keyCnt;
+	}
+
+	/**
 	 * Determines if the player can move in a certain direction based upon user-input.
+	 * NB: Seems awfully cluttered because of all the 'ifs' to determine if the sfx class is in use or not
 	 */
 	@Override
 	public void step() {
@@ -204,6 +214,19 @@ public class BDPlayer extends AbstractBDMovingObject implements IBDKillable {
 			}
 		}
 		askedToGo = null;
+		
+		/*If player collects all diamonds placed on map -> quit
+		Last minute implementation (may not have been tested in every aspect)*/
+		if (diamondCnt == owner.getDiamondCnt()) {
+			if(owner.isSoundOn()) BDSounds.getSound(10).play();
+			//Wait for sound to finish playing
+			try {
+				TimeUnit.SECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			System.exit(0);
+		}
 	}
 	
 	@Override

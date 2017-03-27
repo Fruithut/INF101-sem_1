@@ -91,9 +91,10 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 			rightup = new ImagePattern(new Image(resourceAsStream3), 0, 0, 1,1, true);
 			InputStream resourceAsStream4 = getClass().getResourceAsStream("../images/bug/rightdown.png");
 			rightdown = new ImagePattern(new Image(resourceAsStream4), 0, 0, 1,1, true);
-		} catch (IllegalArgumentException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
 			System.out.println("An imagefile is missing!");
+			System.exit(1);
 		}
 	}
 
@@ -179,9 +180,10 @@ public class BDBug extends AbstractBDKillingObject implements IBDKillable {
 		Collection<Position> toDiamonds = owner.getNearestEmpty(owner.getPosition(this), DEATH_DIAMONDS);
 		for (Position p : toDiamonds) {
 			owner.set(p.getX(), p.getY(), new BDDiamond(owner));
+			//Increase diamonds in BDMap
+			owner.increaseDiamondCnt();
 		}
 		if (owner.isSoundOn()) BDSounds.getSound(3).play();
-		
 	}
 
 	/**

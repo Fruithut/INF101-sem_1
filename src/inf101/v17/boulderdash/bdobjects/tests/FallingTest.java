@@ -63,45 +63,10 @@ public class FallingTest {
 			map.step();
 		assertEquals(obj, map.get(0, 1));
 	}
-
-	@Test
-	public void fallingTest1Rock() {
-		IBDObject obj = map.get(1, 4);
-		assertTrue(obj instanceof BDRock);
-
-		// four steps later, we've fallen down one step
-		map.step();
-		map.step();
-		map.step();
-		map.step();
-		assertEquals(obj, map.get(1, 3));
-
-		map.step();
-		map.step();
-		map.step();
-		map.step();
-		assertEquals(obj, map.get(1, 2));
-
-		map.step();
-		map.step();
-		map.step();
-		map.step();
-		assertEquals(obj, map.get(1, 1));
-
-		// wall reached, no more falling
-		for (int i = 0; i < 10; i++)
-			map.step();
-		assertEquals(obj, map.get(1, 1));
-	}
 	
 	@Test
 	public void fallingTest2() {
 		checkFall(new Position(0, 4));
-	}
-
-	@Test
-	public void fallingTest2Rock() {
-		checkFall(new Position(1, 4));
 	}
 	
 	@Test
@@ -120,39 +85,10 @@ public class FallingTest {
 	}
 
 	@Test
-	public void fallingKills1Rock() {
-		// diamond two tiles above kills player
-		IGrid<Character> grid = new MyGrid<>(2, 5, ' ');
-		grid.set(0, 4, 'r');
-		grid.set(0, 2, 'p');
-		grid.set(0, 0, '*');
-		map = new BDMap(grid);
-
-		checkFall(new Position(0, 4));
-		checkFall(new Position(0, 3));
-		checkFall(new Position(0, 2));
-		assertFalse(map.getPlayer().isAlive());
-	}
-
-	@Test
 	public void restingDoesntKill1() {
 		// diamond on top of player doesn't kill player
 		IGrid<Character> grid = new MyGrid<>(2, 5, ' ');
 		grid.set(0, 3, 'd');
-		grid.set(0, 2, 'p');
-		grid.set(0, 0, '*');
-		map = new BDMap(grid);
-
-		for (int i = 0; i < 10; i++)
-			map.step();
-		assertTrue(map.getPlayer().isAlive());
-	}
-	
-	@Test
-	public void restingDoesntKill1Rock() {
-		// diamond on top of player doesn't kill player
-		IGrid<Character> grid = new MyGrid<>(2, 5, ' ');
-		grid.set(0, 3, 'r');
 		grid.set(0, 2, 'p');
 		grid.set(0, 0, '*');
 		map = new BDMap(grid);
@@ -185,6 +121,70 @@ public class FallingTest {
 			return next;
 		} else
 			return pos;
+	}
+
+	@Test
+	public void fallingTest1Rock() {
+		IBDObject obj = map.get(1, 4);
+		assertTrue(obj instanceof BDRock);
+
+		// four steps later, we've fallen down one step
+		map.step();
+		map.step();
+		map.step();
+		map.step();
+		assertEquals(obj, map.get(1, 3));
+
+		map.step();
+		map.step();
+		map.step();
+		map.step();
+		assertEquals(obj, map.get(1, 2));
+
+		map.step();
+		map.step();
+		map.step();
+		map.step();
+		assertEquals(obj, map.get(1, 1));
+
+		// wall reached, no more falling
+		for (int i = 0; i < 10; i++)
+			map.step();
+		assertEquals(obj, map.get(1, 1));
+	}
+
+	@Test
+	public void fallingTest2Rock() {
+		checkFall(new Position(1, 4));
+	}
+
+	@Test
+	public void fallingKills1Rock() {
+		// rock two tiles above kills player
+		IGrid<Character> grid = new MyGrid<>(2, 5, ' ');
+		grid.set(0, 4, 'r');
+		grid.set(0, 2, 'p');
+		grid.set(0, 0, '*');
+		map = new BDMap(grid);
+
+		checkFall(new Position(0, 4));
+		checkFall(new Position(0, 3));
+		checkFall(new Position(0, 2));
+		assertFalse(map.getPlayer().isAlive());
+	}
+
+	@Test
+	public void restingDoesntKill1Rock() {
+		// rock on top of player doesn't kill player
+		IGrid<Character> grid = new MyGrid<>(2, 5, ' ');
+		grid.set(0, 3, 'r');
+		grid.set(0, 2, 'p');
+		grid.set(0, 0, '*');
+		map = new BDMap(grid);
+
+		for (int i = 0; i < 10; i++)
+			map.step();
+		assertTrue(map.getPlayer().isAlive());
 	}
 
 	/**

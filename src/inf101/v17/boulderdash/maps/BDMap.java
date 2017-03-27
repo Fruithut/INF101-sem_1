@@ -38,6 +38,12 @@ public class BDMap {
 	 */
 	private static boolean soundOn = false;
 
+	/**
+	 * How many diamonds currently on the map
+	 */
+	private static int diamondCnt = 0;
+
+	
 
 	/**
 	 * Main constructor of this class.
@@ -161,6 +167,7 @@ public class BDMap {
 		} else if (c == ' ') {
 			return new BDEmpty(this);
 		} else if (c == 'd') {
+			diamondCnt++;
 			return new BDDiamond(this);
 		} else if (c == 'r') {
 			return new BDRock(this);
@@ -318,7 +325,7 @@ public class BDMap {
 	}
 
 	/**
-	 * Sets sound to on or off.
+	 * Sets sound(sfx) to on or off.
 	 * @param soundOn
 	 */
 	public static void setSound(boolean soundOn) {
@@ -331,5 +338,20 @@ public class BDMap {
 	public static boolean isSoundOn() {
 		return soundOn;
 	}
-	
+
+	/**
+	 * Amount of diamonds on map
+	 * @return
+	 */
+	public static int getDiamondCnt() {
+		System.out.println(diamondCnt);
+		return diamondCnt;
+	}
+
+	/**
+	 * Increase diamonds-counter by one
+	 */
+	public void increaseDiamondCnt() {
+		diamondCnt++;
+	}
 }

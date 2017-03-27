@@ -27,9 +27,10 @@ public class BDSand extends AbstractBDObject {
 		try {
 			InputStream resourceAsStream = getClass().getResourceAsStream("../images/sand.png");
 			image = new ImagePattern(new Image(resourceAsStream), 0, 0, 1,1, true);
-		} catch (IllegalArgumentException e) {
+		} catch (NullPointerException e) {
 			e.printStackTrace();
-			System.out.println("An imagefile is missing");
+			System.out.println("An imagefile is missing!");
+			System.exit(1);
 		}
 	}
 

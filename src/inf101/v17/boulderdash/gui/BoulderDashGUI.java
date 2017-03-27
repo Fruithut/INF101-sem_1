@@ -47,7 +47,7 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 
 	private Stage stage;
 	
-	//Declared outside playMusic() method, garbage-collection would otherwise clean it during runtime
+	//Declared outside playMusic() method, garbage-collector would otherwise clean it during runtime
 	private MediaPlayer player;
 
 	public BoulderDashGUI() {
@@ -125,13 +125,13 @@ public class BoulderDashGUI extends Application implements EventHandler<KeyEvent
 		try{URL music = getClass().getResource("../gui/backgroundtracks/Pixelland.mp3");
 			Media song = new Media(music.toString());
 			player = new MediaPlayer(song);
-			
-			player.setVolume(0.4);
+			player.setVolume(0.35);
 			player.setCycleCount(MediaPlayer.INDEFINITE);
 			player.play();
 			System.out.println("Volume: " + player.getVolume());
-		} catch (MissingResourceException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			System.out.println("A backgroundtrack is missing! - Check folder structure");
+			//Continue to play without background music
 		}
 	}
 
