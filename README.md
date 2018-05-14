@@ -1,3 +1,5 @@
+#### *NB: This repository has been cloned from a GitLab server that was used for assignment delivery*
+
 [Semesteroppgave 1: Boulder Dash](https://retting.ii.uib.no/inf101/inf101v17/wikis/sem-1)
 ===
 
