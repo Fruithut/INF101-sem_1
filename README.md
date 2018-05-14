@@ -1,9 +1,8 @@
-#### *NB: This repository has been cloned from a GitLab server that was used for assignment delivery*
-
 # Semesteroppgave 1: Boulder Dash
-===
+A small game inspired by Boulder Dash implemented in Java.
 
-*Innleveringsfrist: Mandag 27. mars kl 2400*
+#### *NB: This repository has been cloned from a GitLab server that was used for assignment delivery*
+===
 
 ## Om semesteroppgaven
 
