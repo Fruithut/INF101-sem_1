@@ -4,15 +4,6 @@ A small game inspired by Boulder Dash implemented in Java.
 
 #### *NB: This repository has been cloned from a GitLab server that was used for assignment delivery*
 
-## Om semesteroppgaven
-
-Semesteroppgaven er *obligatorisk*, og er ment å gi innsikt i og erfaring med
-teknikkene vi har lært hittil i semesteret, og å teste en del praktiske
-ferdigheter som ikke er så lette å teste på eksamen. Se under angående
-karakter. 
-
-*Les helst all den kjedelige teksten før du begynner. Si ifra om noe er veldig uklart.*
-
 ### Læringsmål
 
 Målene for denne semesteroppgaven er:
@@ -21,94 +12,6 @@ Målene for denne semesteroppgaven er:
 * Å bruke grensesnitt (interface) til å kommunisere mellom objekter.
 * Å lage programmer hvor objektene selv styrer sin egen oppførsel, basert på *hendelser* i systemet.
 * Å beskrive komplekse objekt-orienterte systemer på en forståelig måte.
-
-Semesteroppgaven blir rettet av en gruppeleder, som gir tilbakemeldinger på
-innleveringen. For semesteroppgavene blir det satt poeng, og til sammen teller
-semesteroppgavene 30 % på karakteren i faget. Ved poengsetting legger vi vekt
-på følgende:
-
-* At du har fungerende løsninger på de forskjellige deloppgavene
-* At koden din er ryddig, pent formattert, og at eventuelle deler som er vanskelig å forstå er forklart i kommentarer
-* At du har laget tester for koden din
-* Kreativitet, og at du gjør mer enn minimum for å fullføre oppgaven
-
-Du kan regne med en godt gjennomført innlevering som oppfyller minimumskravene gir en
-poengsum ca. tilsvarende C. For høyere poengsum må man ha gjort en del av bonusoppgavene. Manglende /
-svært mangelfull innlevering gir 0 poeng.
-
-### Samarbeid
-
-Innleveringen er individuell og kan ikke løses i grupper. Dere står likevel fri
-til å samarbeide om utarbeiding av ideer, diskutere løsninger og å hjelpe
-hverandre med å finne og løse problemer (vi oppfordrer faktisk til det!).
-
-### Innlevering
-
-Oppgaven leveres inn ved å pushe til GitLab (Team → Commit → Commit and push).
-[Se instruksjonene fra Lab 1](lab-1). Husk å få med eventuelle nye filer du har
-opprettet (hvis testene virker hos deg, men ikke i innleveringssystemet, er det
-gjerne det som er feil).
-
-Som før skal du ha et repository for oppgaven på retting.ii.uib.no. Se [Lab
-1](lab-1) for mer informasjon og instrukser. Oppgaven skal dere kunne finne i
-repositoriet med den følgende urien:
-
-    https://retting.ii.uib.no/<brukernavn>/inf101.v17.sem1.git
-
-Hvor `<brukernavn>` skal byttes ut med brukernavnet ditt på retting.ii.uib.no. Merk at
-det er nødvendig å bruke https (ssh vil ikke fungere).
-
-Som vist på forelesningene, for å få dette prosjektet inn i eclipse, velg
-`import` fra fil menyen.  Velg så `Git` -> `Projects from git` -> `Clone URI`.
-Fyll in URIen som du finner over. (Eclipse fyller så ut *host* og *repository
-path* med `retting.ii.uib.no` og `/<brukernavn>/inf101.v17.<oppgavenavn>.git`.
-
-Skriv inn ditt brukernavnet og GitLab-passord, og trykk `next`. Nå velger du hvilken
-branch du skal ha (`master` og `clear`). Trykk på `next`. Neste ting er å velge en mappe å
-putte repositoriet under `Directory`, og la resten være slik det er (initial
-branch: `master`, Remote name: `origin`), `next` -> `import existing project`
--> `next` -> `finish`.
-
-Nå skal du ha et prosjekt i eclipse som heter `inf101.v17.sem1`.
-
-Merk at innlevering skal skje til dette repositoriet. For å levere bruker du
-`Team` -> `Push` (husk at du må bruke `commit` først), eventuelt `Team` ->
-`Commit` og så `Commit and Push`. *Husk* at hvis du har opprettet nye
-klasser/filer, må du krysse av for disse i commit-dialogen for at de skal bli
-med i opplastingen.
-
-**VIKTIG:** *Sjekk kvitteringssiden som kommer opp når du pusher, i tilfelle det skjer feil!*
-
-Vi anbefaler at du gjør commit hver dag, eller hver gang du er ferdig med en
-større endring. Da går det alltid an å lete seg tilbake i historien til en
-tidligere versjon hvis du har havnet på villspor (commit-dialogen inneholder
-også en praktisk "Commit and push"-knapp, som pusher endringene til GitLab med
-en gang).
-
-
-* Du kan levere inn så mye og ofte du vil. Versjonen som teller er den siste du
-  pushet før innleveringsfristen.
-
-* *VIKTIG:* Hvis du ikke allerede har prøvd ut GitLab og pushing av
-  innleveringer, må du gjøre det *tidlig*. Du kan ikke regne med å få hjelp til
-  dette på innleveringsdagen, men på gruppetimene vil du få rikelig med hjelp
-  til dette.
-
-* Alle testene bør passere (være grønne). Det blir i tillegg lagt betydelig
-  vekt på kodekvalitet og dokumentasjon. Dvs. koden din skal ikke bare *virke*,
-  den være lett å forstå og å endre.
-
-* Du kan selv sjekke status i
-  [innleveringssystemet](http://retting.ii.uib.no:81/) – det vil gi rask
-  tilbakemelding hver gang du pusher til Gitlab, også før innleveringsfristen.
-  Alt skal være *grønt* der.
-
-### Tips
-
-* Selv om det kanskje bare er litt mer å gjøre enn i en vanlig ukeoppgave, er
-  det veldig mye å sette seg inn i. Du bør begynne tidlig og jobbe jevnt. Du må
-  også regne med å jobbe utenom labtimene.
-
 
 # Boulder Dash
 
@@ -163,14 +66,6 @@ merke til forskjellene:
 * Hvis en trykker på en piltast blir ikke spilleren flyttet med en gang, men man forbereder seg på å flytte og så neste gang `step()` metoden
   blir kalt så blir `BDPlayer` objektets posisjon oppdatert.
 * Objektene er hold i et `DBMap` i likhet til labyrint oppgaven.
-
-# Steg 0
-
-Som før skal du ha et repository for oppgaven på retting.ii.uib.no. Se [Lab
-1](lab-1) og [Lab 2](lab-2) for mer informasjon og instrukser. Oppgaven skal dere kunne finne i
-repositoriet med den følgende urien:
-
-    https://retting.ii.uib.no/<brukernavn>/inf101.v17.Semesteroppgave1.git
 
 # Steg 1 Få en oversikt over koden
 
